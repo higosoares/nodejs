@@ -5,29 +5,35 @@ const { v4: uuidv4 } = require('uuid')
 class UserRepository {
   list() {
     return User.findAll({
+      attributes: ['id', 'name', 'age', 'createdAt'],
       include: {
-        association: 'profile'
+        association: 'profile',
+        attributes: ['name'],
       }
     })
   }
 
   listByName(name) {
     return User.findAll({
+      attributes: ['id', 'name', 'age', 'createdAt'],
       where: {
         name: {
           [Op.substring] : name
         }
       },
       include: {
-        association: 'profile'
+        association: 'profile',
+        attributes: ['name']
       }
     })
   }
 
   listByProfile(name) {
     return User.findAll({
+      attributes: ['id', 'name', 'age', 'createdAt'],
       include: {
         association: 'profile',
+        attributes: ['name'],
         where : {
           name: name
         }
@@ -36,7 +42,16 @@ class UserRepository {
   }
 
   find(id) {
-    return User.findByPk(id)
+    return User.findOne({
+      attributes: ['id', 'name', 'age', 'createdAt'],
+      include: {
+        association: 'profile',
+        attributes: ['name'],
+        where : {
+          id: id
+        }
+      }
+    })
   }
 
   create(profile, params) {

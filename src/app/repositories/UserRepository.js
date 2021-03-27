@@ -43,13 +43,13 @@ class UserRepository {
 
   find(id) {
     return User.findOne({
+      where : {
+        id: id
+      },
       attributes: ['id', 'name', 'age', 'createdAt'],
       include: {
         association: 'profile',
         attributes: ['name'],
-        where : {
-          id: id
-        }
       }
     })
   }

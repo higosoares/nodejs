@@ -3,6 +3,17 @@ const service = require('../services/UserService')
 
 class UserController {
 
+  async find(req, res) {
+    try {
+      const { user_id } = req.params
+      const user = await service.find(user_id)
+
+      return controller.response.json(res, controller.response.codes.OK, user)
+    } catch (err) {
+      next(err)
+    }
+  }
+
   async list(_, res) {
     try {
       const users = await service.list()
